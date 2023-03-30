@@ -21,30 +21,29 @@ const ContactsList = () => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  // const normalisedFilter = filter.toLowerCase();
-  // const filteredContacts = contacts?.filter(item =>
-  //   item.name.toLowerCase().includes(normalisedFilter)
-  // );
+  const filteredContacts = contacts?.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
-  const filteredContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    const filtered = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-    if (filtered.length === 0 && filter) {
-      alert('There are no matches');
-    }
-    if (onError) {
-      alert('Something wrong');
-    }
-    return filtered;
-  };
+  // const filteredContacts = () => {
+  //   const normalizedFilter = filter.toLowerCase();
+  //   const filtered = contacts.filter(contact =>
+  //     contact.name.toLowerCase().includes(normalizedFilter)
+  //   );
+  //   if (filtered.length === 0 && filter) {
+  //     alert('There are no matches');
+  //   }
+  //   if (onError) {
+  //     alert('Something wrong');
+  //   }
+  //   return filtered;
+  // };
 
   return (
     <>
       {isLoading && <Loader />}
       <ol className={css.list}>
-        {filteredContacts().map(({ name, phone, id }) => {
+        {filteredContacts.map(({ name, phone, id }) => {
           return (
             <li className={css.item} key={id}>
               {name}: {phone}
