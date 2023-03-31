@@ -1,4 +1,6 @@
 import css from './MyContacts.module.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ContactsForm from './ContactsForm/ContactsForm';
 import ContactsSearch from './ContactsSearch/ContactsSearch';
 import ContactsList from './ContactsList/ContactsList';
@@ -15,6 +17,7 @@ const MyContacts = () => {
         <ContactsSearch />
         {<ContactsList />}
       </div>
+      <ToastContainer position="top-center" autoClose={2000} />
     </div>
   );
 };

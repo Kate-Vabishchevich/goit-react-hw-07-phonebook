@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/operations';
 import { getContacts } from 'redux/selectors';
 import css from './ContactsForm.module.css';
+import { toast } from 'react-toastify';
+
+const init = { name: '', number: '' };
 
 const ContactsForm = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [form, setForm] = useState(init);
+  const { name, number } = form;
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
@@ -15,10 +18,13 @@ const ContactsForm = () => {
 
     if (
       contacts.find(
-        contact => contact.name.toLocaleLowerCase() === name.toLocaleLowerCase()
+        contact =>
+          contact.name.toLocaleLowerCase() === name.toLocaleLowerCase() ||
+          contact.number === number
       )
     ) {
-      return alert(`${name} is already in contacts.`);
+      reset();
+      return toast.error(`${name} or ${number} is already in contacts.`);
     } else {
       dispatch(addContact({ name, phone: number }));
       reset();
@@ -26,21 +32,12 @@ const ContactsForm = () => {
   };
 
   const reset = () => {
-    setName('');
-    setNumber('');
+    setForm(init);
   };
 
-  const handleChange = e => {
-    switch (e.target.name) {
-      case 'name':
-        setName(e.target.value);
-        break;
-      case 'number':
-        setNumber(e.target.value);
-        break;
-      default:
-        return;
-    }
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    setForm(prevState => ({ ...prevState, [name]: value }));
   };
 
   return (

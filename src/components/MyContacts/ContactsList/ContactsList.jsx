@@ -1,4 +1,5 @@
 import css from './ContactsList.module.css';
+import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact, fetchContacts } from 'redux/operations';
 import {
@@ -25,23 +26,10 @@ const ContactsList = () => {
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
-  // const filteredContacts = () => {
-  //   const normalizedFilter = filter.toLowerCase();
-  //   const filtered = contacts.filter(contact =>
-  //     contact.name.toLowerCase().includes(normalizedFilter)
-  //   );
-  //   if (filtered.length === 0 && filter) {
-  //     alert('There are no matches');
-  //   }
-  //   if (onError) {
-  //     alert('Something wrong');
-  //   }
-  //   return filtered;
-  // };
-
   return (
     <>
       {isLoading && <Loader />}
+      {onError && toast.error('Something wrong')}
       <ol className={css.list}>
         {filteredContacts.map(({ name, phone, id }) => {
           return (
