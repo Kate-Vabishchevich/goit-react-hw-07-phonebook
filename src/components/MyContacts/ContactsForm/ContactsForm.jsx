@@ -20,7 +20,7 @@ const ContactsForm = () => {
       contacts.find(
         contact =>
           contact.name.toLocaleLowerCase() === name.toLocaleLowerCase() ||
-          contact.number === number
+          contact.phone === number
       )
     ) {
       reset();
